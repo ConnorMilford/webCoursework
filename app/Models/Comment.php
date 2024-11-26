@@ -10,7 +10,7 @@ class Comment extends Model
 {
     Use HasFactory;
 
-    protected $commentDetails = [
+    protected $fillable = [
         'commentText', 
         'userId', //(foreign key) user that posted the comment
         'postId' // (foreign key) post commented on

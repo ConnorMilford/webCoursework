@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('postId');
             $table->timestamps();
             
-            
+            // TODO: FIX THIS 
             $table->foreign('userId')->references('id')->on('users')
              ->onDelete('cascade')->onUpdate('cascade');
 
