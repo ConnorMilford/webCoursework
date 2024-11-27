@@ -14,8 +14,13 @@ class Post extends Model
         'user_account_id'
     ];
     
-    public function getPoster()
+    public function user()
     {
-        $this->belongsTo(User::class, 'user_account_id');
+        return $this->belongsTo(User::class, 'user_account_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'postId');
     }
 }

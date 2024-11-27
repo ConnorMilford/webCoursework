@@ -12,4 +12,6 @@ Route::get('/home/{name}', function ($name) {
     return "Welcome to $name's home page";
 });
 
+Route::get('/users', [UserAccountController::class, 'index']);
+
 Route::get('/user/{id}', [UserAccountController::class, 'show']);

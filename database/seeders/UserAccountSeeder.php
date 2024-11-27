@@ -14,7 +14,6 @@ class UserAccountSeeder extends Seeder
      */
     public function run(): void
     {
-        dd('User account seeder');
         UserAccount::factory()->count(50)->create();
     }
 }

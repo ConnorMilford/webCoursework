@@ -6,6 +6,7 @@ use App\Models\UserAccount;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Post;
+use App\Models\Comment;
 
 class PostTableSeeder extends Seeder
 {
@@ -28,9 +29,12 @@ class PostTableSeeder extends Seeder
 
         foreach ($userAccounts as $userAccount) 
         {
-            Post::factory()->create([
-                'user_account_id' => $userAccount->id, 
-            ]);
+            Post::factory()->count(10)->create()->each(function ($post) {
+                // Create some comments for each post
+                Comment::factory()->count(3)->create([
+                    'postId' => $post->id,
+                ]);
+            });
         }
     }
 }

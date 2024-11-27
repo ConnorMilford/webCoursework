@@ -16,13 +16,13 @@ class Comment extends Model
         'postId' // (foreign key) post commented on
     ];
 
-    public function getUser() 
+    public function user() 
     {
         return $this->belongsTo(UserAccount::class, 'user_account_id');
     }
 
     
-    public function getPost() 
+    public function posts() 
     {
         return $this->belongsTo(Post::class, 'postId');
     }
