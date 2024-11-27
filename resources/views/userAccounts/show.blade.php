@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
-@section('HeaderTitle', $userAccount -> userName)
+@section('HeaderTitle',$userAccount -> userName)
 
 @section('userContent')
 
     <ul>
-        <li>Name: {{$userAccount -> userName}}</li>
-        <li>User: {{$userAccount -> user -> name}}</li>
+        <p>Name: {{$userAccount -> userName}}</p>
+        <p>User: {{$userAccount -> user -> name}}</p>
 
         <p><strong>Posts:</strong></p>
         @if ($userAccount->posts->isEmpty())
             <p>No posts found.</p>
         @else
             @foreach ($userAccount->posts as $post)
-                <li>{{$post->postText}}</li>
+                <p>{{$post->postText}}</p>
             @endforeach    
         @endif
 
@@ -22,7 +22,7 @@
         @else
             <p><strong>Comments:</strong></p>
             @foreach ($post->comments as $comment)
-                <li>{{$comment->user->name}}: {{$comment->commentText}}</li>
+                <p>{{$comment->user->userName}} said {{$comment->commentText}}</p>
             @endforeach    
         @endif
 

@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <title>ConText @yield('Title')</title> 
+    <title>ConText - @yield('Title')</title> 
 </head>
 
 <body>
-    <h1>ConText @yield("HeaderTitle") </h1>
+    <h1>ConText  - @yield("HeaderTitle")'s page</h1>
 
     <div>
         @yield('userContent')
