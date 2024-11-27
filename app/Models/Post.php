@@ -11,11 +11,11 @@ class Post extends Model
 
     protected $fillable = [
         'postText', 
-        'posterId'
+        'user_account_id'
     ];
     
     public function getPoster()
     {
-        $this->belongsTo(User::class);
+        $this->belongsTo(User::class, 'user_account_id');
     }
 }

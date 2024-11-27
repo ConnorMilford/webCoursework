@@ -23,7 +23,7 @@ class CommentFactory extends Factory
         return [
             //userId and postId set explicitly in the seeder. 
             'commentText' => $this->faker->sentence(),
-            'userId' => User::pluck('id')->random(),
+            'user_account_id' => User::pluck('id')->random(),
             'postId' => Post::pluck('id')->random(),
         ];
     }

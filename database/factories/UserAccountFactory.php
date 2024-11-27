@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserAccount>
@@ -18,6 +19,7 @@ class UserAccountFactory extends Factory
     {
         return [
             'userName' => $this->faker->userName,
+            'user_id' => User::pluck('id')->random(),
         ];
     }
 }

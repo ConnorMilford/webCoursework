@@ -12,18 +12,18 @@ class Comment extends Model
 
     protected $fillable = [
         'commentText', 
-        'userId', //(foreign key) user that posted the comment
+        'user_account_id', //(foreign key) user that posted the comment
         'postId' // (foreign key) post commented on
     ];
 
     public function getUser() 
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(UserAccount::class, 'user_account_id');
     }
 
     
     public function getPost() 
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Post::class, 'postId');
     }
 }

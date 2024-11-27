@@ -31,7 +31,7 @@ class CommentTableSeeder extends Seeder
             foreach ($users as $user)
             {
                 Comment::factory()->create([
-                    'userId' => $user->id,
+                    'user_account_id' => $user->id,
                     'postId' => $post->id
                 ]);
             }

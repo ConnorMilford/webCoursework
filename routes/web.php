@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserAccountController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -10,3 +11,5 @@ Route::get('/', function () {
 Route::get('/home/{name}', function ($name) {
     return "Welcome to $name's home page";
 });
+
+Route::get('/user/{id}', [UserAccountController::class, 'show']);

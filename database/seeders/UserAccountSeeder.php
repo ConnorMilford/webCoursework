@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\UserAccount;
+use App\Models\Post;
 
 class UserAccountSeeder extends Seeder
 {
@@ -12,7 +14,7 @@ class UserAccountSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('posts')->truncate();
+        dd('User account seeder');
         UserAccount::factory()->count(50)->create();
     }
 }

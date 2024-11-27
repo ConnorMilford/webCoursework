@@ -12,17 +12,18 @@ class UserAccount extends Model
     //posts and comments will be arrays of comment and post IDS
     protected $fillable = [
         'userName',
+        'user_id',
     ];
 
 
     public function user() 
     {
-        return $this->belongsTo(User::class, 'userId');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function posts() 
     {
-        return $this->hasMany(Post::class, 'postId');
+        return $this->hasMany(Post::class, 'user_account_id');
     }
 
     public function comments()
