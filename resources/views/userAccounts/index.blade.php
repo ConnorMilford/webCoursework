@@ -9,7 +9,7 @@
     <ul>
 
     @foreach ($userAccounts as $userAccount)
-        <li>{{$userAccount->userName}}</li>
+        <li><a href="{{route('accounts.show',['id' => $userAccount->id])}}">{{$userAccount->userName}}</a></li>
     @endforeach
 
     </ul>

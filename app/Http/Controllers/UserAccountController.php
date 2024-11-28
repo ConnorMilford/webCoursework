@@ -22,4 +22,27 @@ class UserAccountController extends Controller
 
     }
 
+    public function create()
+    {
+        return view('userAccounts.create');
+    }
+
+    public function store(Request $request)
+    {
+      $validData = $request->validate([
+        'name' => 'required|max:35',
+        'user_id' => 'required|numeric'
+      ]);
+      
+      $newAccount = new UserAccount;
+      $newAccount->userName = $validData['name'];
+      $newAccount->userName = $validData['user_id'];
+      $newAccount->save();
+
+      session()->flash('message', 'Account created :)');
+      return redirect()->route('accounts.index');
+    }
+
+    
+
 }

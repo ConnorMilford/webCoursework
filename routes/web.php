@@ -3,15 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAccountController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-// https://canvas.swansea.ac.uk/courses/52735/files/7256039?module_item_id=3001447
-Route::get('/home/{name}', function ($name) {
-    return "Welcome to $name's home page";
-});
+Route::get('/accounts', [UserAccountController::class, 'index'])->name('accounts.index');
 
-Route::get('/users', [UserAccountController::class, 'index']);
+//Diplays page to create new animal 
+Route::get('/accounts/create', [UserAccountController::class,'create'])->name('accounts.create');
 
-Route::get('/user/{id}', [UserAccountController::class, 'show']);
+//Actually stores the created animal 
+Route::post('/accounts', [UserAccountController::class, 'store'])->name('accounts.store');
+
+// shows a user profile
+Route::get('/accounts/{id}', [UserAccountController::class, 'show'])->name('accounts.show');
+
+// lecture 10 slide 18
+//advised laravel structure
+
+
+
+
