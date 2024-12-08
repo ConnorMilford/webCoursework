@@ -2,24 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
-class UserAccount extends Model
+class UserAccount extends Authenticatable
 {
     use HasFactory;
+    use Notifiable;
 
     //posts and comments will be arrays of comment and post IDS
     protected $fillable = [
         'userName',
-        'user_id',
+        'password',
+        'email',
+
     ];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    public function user() 
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
 
     public function posts() 
     {

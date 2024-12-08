@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.navigation')
 
-@section('titleUserName', 'test')
+@section('name', 'Accounts Index')
 
 @section('userContent')
 
     <p>All current registered user accounts:</p>
-
+    <p>todo: use paginate here</p>
     <ul>
 
     @foreach ($userAccounts as $userAccount)

@@ -31,17 +31,20 @@ class UserAccountController extends Controller
     {
       $validData = $request->validate([
         'name' => 'required|max:35',
-        'user_id' => 'required|numeric'
+        'email' => 'required|email|max:60',
+        'password' => 'required|min:8|max:60',
       ]);
-      
+
       $newAccount = new UserAccount;
       $newAccount->userName = $validData['name'];
-      $newAccount->userName = $validData['user_id'];
+      $newAccount->email = $validData['email'];
+      $newAccount->password = bcrypt( $validData['password']);
       $newAccount->save();
 
       session()->flash('message', 'Account created :)');
       return redirect()->route('accounts.index');
     }
+
 
     
 

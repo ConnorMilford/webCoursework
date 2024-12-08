@@ -19,7 +19,8 @@ class UserAccountFactory extends Factory
     {
         return [
             'userName' => $this->faker->userName,
-            'user_id' => User::pluck('id')->random(),
+            'password' => bcrypt('password'),
+            'email' => $this->faker->safeEmail(),
         ];
     }
 }

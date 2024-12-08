@@ -1,12 +1,11 @@
-@extends('layouts.app')
+@extends('userAccounts.app')
 
 @section('HeaderTitle',$userAccount -> userName)
 
 @section('userContent')
 
     <ul>
-        <p>Name: {{$userAccount -> userName}}</p>
-        <p>User: {{$userAccount -> user -> name}}</p>
+        <p>Name: <Strong>{{$userAccount -> userName}}</Strong></p>
 
         <p><strong>Posts:</strong></p>
         @if ($userAccount->posts->isEmpty())
@@ -17,14 +16,13 @@
             @endforeach    
         @endif
 
-        @if ($post ->comments->isEmpty())
-            <p>This post has no comments</p>
-        @else
+        @foreach ($userAccount ->posts as $post)
             <p><strong>Comments:</strong></p>
             @foreach ($post->comments as $comment)
                 <p>{{$comment->user->userName}} said {{$comment->commentText}}</p>
-            @endforeach    
-        @endif
+            @endforeach
+        @endforeach   
+        
 
         
 
