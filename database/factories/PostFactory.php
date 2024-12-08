@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 
+use App\Models\UserAccount;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Post;
 use App\Models\User;
@@ -19,10 +20,10 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        // poster id set in seeder
+
         return [
             'postText' => $this->faker->sentence(),
-            'posterId' => User::pluck('id')->random(),
+            'user_account_id' => UserAccount::pluck('id')->random(),
         ];
     }
 }

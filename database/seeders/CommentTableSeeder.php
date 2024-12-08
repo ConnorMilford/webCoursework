@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use App\Models\Comment;
+use App\Models\User;
+use App\Models\Post;
 class CommentTableSeeder extends Seeder
 {
     /**
@@ -31,7 +34,7 @@ class CommentTableSeeder extends Seeder
             foreach ($users as $user)
             {
                 Comment::factory()->create([
-                    'userId' => $user->id,
+                    'user_account_id' => $user->id,
                     'postId' => $post->id
                 ]);
             }

@@ -20,3 +20,4 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+database/migrations/2024_11_12_205708_create_user_account_table.php
