@@ -1,25 +1,17 @@
 <?php
 
+use App\Http\Controllers\HomePageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAccountController;
 
 
-Route::get('/accounts', [UserAccountController::class, 'index'])->name('accounts.index');
+Route::get('/posts', [HomePageController::class, 'index'])->name('posts.index');
 
-//Diplays page to create new animal 
-Route::get('/accounts/create', [UserAccountController::class,'create'])->name('accounts.create');
-
-// posts login
-Route::post('/accounts/postLogin', [UserAccountController::class, 'postLogin'])->name('accounts.postLogin');
-
-//Actually stores the created animal 
-Route::post('/accounts', [UserAccountController::class, 'store'])->name('accounts.store');
-
-// shows a user profile
-Route::get('/accounts/{id}', [UserAccountController::class, 'show'])->name('accounts.show');
+Route::get('/posts/{post}', [HomePageController::class, 'show'])->name('posts.show');
 
 //shows login page
 Route::get('/accounts/login', [UserAccountController::class, 'login'])->name('accounts.login');
+
 
 Route::get('/', function () {
     return view('welcome');

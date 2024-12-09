@@ -4,8 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>ConText - @yield('title')</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -14,6 +15,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
@@ -29,8 +31,14 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @yield("MainContent")
             </main>
         </div>
     </body>
+
+    <footer class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto">
+            <!--<p>ConText Made by Connor!</p>-->
+        </div>
+    </footer>
 </html>
