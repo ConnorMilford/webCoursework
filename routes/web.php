@@ -5,6 +5,7 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAccountController;
+use App\Http\Controllers\ProfileController;
 
 
 Route::get('/posts', [HomePageController::class, 'index'])->name('posts.index');
