@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAccountController;
 
@@ -12,6 +14,9 @@ Route::get('/posts/{post}', [HomePageController::class, 'show'])->name('posts.sh
 //shows login page
 Route::get('/accounts/login', [UserAccountController::class, 'login'])->name('accounts.login');
 
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
 Route::get('/', function () {
     return view('welcome');

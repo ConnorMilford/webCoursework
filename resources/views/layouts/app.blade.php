@@ -34,6 +34,8 @@
                 @yield("MainContent")
             </main>
         </div>
+
+        @stack('scripts')
     </body>
 
     <footer class="min-h-screen bg-gray-100 dark:bg-gray-900">
