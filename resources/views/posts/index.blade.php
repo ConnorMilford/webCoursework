@@ -28,9 +28,10 @@
                                     </form>
 
                                     <!-- Hidden Edit Form -->
-                                    <div class="edit-form-container hidden mt-4">
+                                    <div class="edit-form-container hidden mt-4" data-id="{{$post->id}}">
                                         <form class="edit-post-form" data-id="{{ $post->id }}">
                                             @csrf
+                                            @method('PATCH')
                                             <textarea name="postText" class="w-full border rounded p-3 text-black">{{ $post->postText }}</textarea>
                                             <button type="button" class="save-post bg-green-500 text-black px-4 py-2 rounded mt-2">Save</button>
                                             <button type="button" class="cancel-post bg-gray-500 text-black px-4 py-2 rounded mt-2">Cancel</button>
@@ -75,7 +76,7 @@
 <script>
     // EDIT POST SAVE BUTTON
     $(document).on('click', '.edit-post-button', function () {
-        const postId = $(this).data('id');
+        const postId = $(this).closest('.edit-form-container').data('id');
         const postDiv = $(this).closest('.my-4'); 
 
         postDiv.find('.edit-form-container').toggleClass('hidden');
@@ -85,10 +86,11 @@
         postDiv.find('.delete-post-button').hide();
     });
     
-    $(document).on('click', '.save-post-button', function () {
+    $(document).on('click', '.save-post', function () {
         const postId = $(this).closest('.edit-form-container').data('id');
         const postText = $(this).closest('form').find('textarea[name="postText"]').val();
-        const token = '{{ csrf_token() }}'; 
+        const token = $('meta[name="csrf-token"]').attr('content'); 
+
 
     
         if (!postText.trim()) {
@@ -111,6 +113,8 @@
 
                 // Show the action buttons back
                 postDiv.find('.post-actions').show();
+                location.reload(); 
+
             },
             error: function (xhr) {
                 alert('Failed to update the post.');
@@ -148,7 +152,7 @@
             success: function(response) {
                 if (response.success) {
                     alert('post added successfully!');
-                    location.reload(); // Reload the page to show the new post
+                    location.reload(); 
                 } else {
                     alert('Failed to add the post.');
                 }
