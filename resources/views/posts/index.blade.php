@@ -14,25 +14,46 @@
                         <div class="my-4 p-4 border-b">
                             <p><strong>{{ $post->user->userName }}</strong> (Posted on: {{ $post->created_at->format('F j, Y') }})</p>
                             <a href="{{ route('posts.show', $post->id) }}">{{$post->postText}}</a>
-                            <!-- Edit Button -->
-                            @if (Auth::id() == $post->user_id) 
-                                <button class="edit-post-button bg-yellow-500 text-white px-4 py-2 rounded mt-2">Edit Post</button>
+                                @if (Auth::user()->id === $post->user_account_id)
+                                    
+                                <!-- Edit Button -->
+                                <div class="post-actions flex space-x-2 mt-2">
+                                    <button class="edit-post-button bg-transparent text-white px-2 py-1 rounded text-xs" data-id="{{ $post->id }}">Edit</button>
+
+                                    <!-- Delete Button -->
+                                    <form action="{{ route('posts.destroy', $post) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-transparent text-white px-2 py-1 rounded text-xs">Delete</button>
+                                    </form>
+
+                                    <!-- Hidden Edit Form -->
+                                    <div class="edit-form-container hidden mt-4">
+                                        <form class="edit-post-form" data-id="{{ $post->id }}">
+                                            @csrf
+                                            <textarea name="postText" class="w-full border rounded p-3 text-black">{{ $post->postText }}</textarea>
+                                            <button type="button" class="save-post bg-green-500 text-black px-4 py-2 rounded mt-2">Save</button>
+                                            <button type="button" class="cancel-post bg-gray-500 text-black px-4 py-2 rounded mt-2">Cancel</button>
+                                        </form>
+                                    </div>
+                                </div>
                             @endif
                         </div>
+                        
                     @empty
                         <p>No posts found.</p>
                     @endforelse
 
-                    <!-- Pagination Links -->
+                    
                     <div class="mt-4">
                         {{ $posts->links() }} 
                     </div>
 
                     <!-- ADD post BUTTON -->
                                 
-                    <button class="show-post-form bg-blue-500 text-white px-4 py-2 rounded mt-6">Add Post</button>
+                    <button class="show-post-form bg-blue-500 text-black px-4 py-2 rounded mt-6">Add Post</button>
 
-                    <!-- Hidden post Form -->
+                    <!-- post form -->
                     <div class="post-form-container hidden mt-4 text-black">
                         <form id="post-form">
                             @csrf
@@ -40,6 +61,9 @@
                             <button type="button" class="submit-post bg-green-500 text-white px-4 py-2 rounded mt-2">Submit</button>
                         </form>
                     </div>
+
+                    
+
                 </div>
             </div>
         </div>
@@ -49,22 +73,71 @@
 
 @push('scripts')
 <script>
+    // EDIT POST SAVE BUTTON
+    $(document).on('click', '.edit-post-button', function () {
+        const postId = $(this).data('id');
+        const postDiv = $(this).closest('.my-4'); 
+
+        postDiv.find('.edit-form-container').toggleClass('hidden');
+        postDiv.find('.post-text').toggleClass('hidden'); 
+
+        postDiv.find('.edit-post-button').hide();
+        postDiv.find('.delete-post-button').hide();
+    });
+    
+    $(document).on('click', '.save-post-button', function () {
+        const postId = $(this).closest('.edit-form-container').data('id');
+        const postText = $(this).closest('form').find('textarea[name="postText"]').val();
+        const token = '{{ csrf_token() }}'; 
+
+    
+        if (!postText.trim()) {
+            alert('Post text cannot be empty!');
+            return;
+        }
+
+        
+        $.ajax({
+            url: `/posts/${postId}`, 
+            type: 'PATCH',
+            data: {
+                _token: token, 
+                postText: postText 
+            },
+            success: function (response) {
+                const postDiv = $(`.edit-form-container[data-id="${postId}"]`).closest('.my-4');
+                postDiv.find('.post-text').text(response.postText).removeClass('hidden');
+                postDiv.find('.edit-form-container').addClass('hidden');
+
+                // Show the action buttons back
+                postDiv.find('.post-actions').show();
+            },
+            error: function (xhr) {
+                alert('Failed to update the post.');
+                console.error(xhr.responseText);
+            }
+        });
+    });
+        
+
     $(document).on('click', '.show-post-form', function() {
         let postFormContainer = $(this).next('.post-form-container');
-        postFormContainer.toggleClass('hidden'); // Tailwind's hidden class toggles visibility
+        postFormContainer.toggleClass('hidden'); 
     });
 
+    
+    //ADD POST SUBMIT BUTTON
     $(document).on('click', '.submit-post', function() {
-        let postId = {{ $post->id }}; // Post ID
-        let postText = $(this).closest('form').find('textarea[name="post"]').val(); // Get the post text
-        let token = '{{ csrf_token() }}'; // CSRF Token
+        let postId = {{ $post->id }}; 
+        let postText = $(this).closest('form').find('textarea[name="post"]').val(); 
+        let token = '{{ csrf_token() }}'; 
 
         if (postText.trim() === '') {
             alert('Please enter a post.');
             return;
         }
 
-        // Make the AJAX request to add the post
+       
         $.ajax({
             url: '/posts/',
             type: 'POST',

@@ -7,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -34,7 +36,7 @@ class ProfileController extends Controller
 
         // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
-            $file = $request->file('profile_picture');
+            $file = $request->file('profile_picture')->store('profile_pciture', 'public');
 
             // Validate the uploaded file
             $request->validate([
@@ -43,12 +45,11 @@ class ProfileController extends Controller
 
             // Delete the old profile picture if it exists
             if ($request->user()->profile_picture) {
-                \Storage::disk('public')->delete($request->user()->profile_picture);
+                Storage::disk('public')->delete($request->user()->profile_picture);
             }
 
             // Store the new profile picture
-            $filePath = $file->store('profile_pictures', 'public');
-            $request->user()->profile_picture = $filePath;
+            $request->user()->profile_picture = $request->file;
         }
 
         $request->user()->save();
