@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $post->user->name .("'s post"))
+@section('title', $post->user->userName .("'s post"))
 
 @section('MainContent')
     <div class="py-12">
@@ -11,7 +11,7 @@
 
                     <!-- Post -->
                     <div class="my-4 p-4 border-b">
-                        <p><strong>{{ $post->user->name }}</strong> (Posted on: {{ $post->created_at->format('F j, Y') }})</p>
+                        <p><strong>{{ $post->user->userName }}</strong> (Posted on: {{ $post->created_at->format('F j, Y') }})</p>
                         <p>{{ $post->postText }}</p>
 
                         @if (Auth::user()->id === $post->user_account_id)

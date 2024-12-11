@@ -13,16 +13,13 @@ return new class extends Migration
     {
         Schema::create('user_accounts', function (Blueprint $table) {
             $table -> id();
-            //$table->unsignedBigInteger('user_id')->unique();
-            //$table->foreign('user_id')->references('id')->on('users')
-            //->onDelete('cascade')->onUpdate('cascade');
-
             $table->string('userName');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->string('profile_picture')->nullable();
+            $table->json('saved_posts')->nullable();
 
             
             $table->timestamps();

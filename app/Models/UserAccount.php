@@ -17,6 +17,7 @@ class UserAccount extends Authenticatable
         'password',
         'email',
         'profile_picture',
+        'saved_posts',
     ];
 
     protected $hidden = [
@@ -26,6 +27,7 @@ class UserAccount extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'saved_posts' => 'array',
     ];
 
 

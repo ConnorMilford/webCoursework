@@ -17,4 +17,9 @@ class HomePageController extends Controller
     {
         return view('posts.show', compact('post'));
     }
+
+    public function saved()
+    {
+        return view('posts.saved', compact('posts'));
+    }
 }

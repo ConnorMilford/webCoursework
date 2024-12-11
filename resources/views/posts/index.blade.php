@@ -11,13 +11,23 @@
                     <h3 class="text-lg font-semibold">Posts</h3>
 
                     @forelse ($posts as $post)
-                        <div class="my-4 p-4 border-b">
-                            <p><strong>{{ $post->user->userName }}</strong> (Posted on: {{ $post->created_at->format('F j, Y') }})</p>
+                        <div class="my-2 p-2 border-b">
+
+                            <div class="flex">
+                                <p><strong>{{ $post->user->userName }}</strong> (Posted on: {{ $post->created_at->format('F j, Y') }})</p>
+                                <button class="favourite-post-button bg-transparent text-white px-2 py-1 rounded text-xs" data-id="{{ $post->id }}">
+                                        {{ in_array($post->id, auth()->user()->saved_posts ?? []) ? 'Unsave' : 'Save' }}
+                                    </button>
+                            </div>
                             <a href="{{ route('posts.show', $post->id) }}">{{$post->postText}}</a>
+                            
+                            
+                            
                                 @if (Auth::user()->id === $post->user_account_id)
                                     
                                 <!-- Edit Button -->
                                 <div class="post-actions flex space-x-2 mt-2">
+
                                     <button class="edit-post-button bg-transparent text-white px-2 py-1 rounded text-xs" data-id="{{ $post->id }}">Edit</button>
 
                                     <!-- Delete Button -->
@@ -74,6 +84,39 @@
 
 @push('scripts')
 <script>
+    $(document).on('click', '.favourite-post-button', function () {
+        const postId = $(this).data('id');
+        const isSaved = $(this).text().trim() === 'Unsave';  
+
+        const url = isSaved ? '/posts/unsave' : '/posts/save';
+        const button = $(this); 
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',  
+                postId: postId,  
+            },
+            success: function(response) {
+                if (response.success) {
+                    const newText = isSaved ? 'Save' : 'Unsave';
+                    button.text(newText);  
+                    alert(response.message);
+                } else {
+                    alert('Failed to save/unsave the post.');
+                }
+            },
+            error: function(xhr) {
+                alert('An error occurred while saving/unsaving the post.');
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+
+
+
     // EDIT POST SAVE BUTTON
     $(document).on('click', '.edit-post-button', function () {
         const postId = $(this).closest('.edit-form-container').data('id');

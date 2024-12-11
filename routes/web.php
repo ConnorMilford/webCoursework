@@ -8,6 +8,7 @@ use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\ProfileController;
 
 
+
 Route::get('/posts', [HomePageController::class, 'index'])->name('posts.index');
 
 Route::get('/posts/{post}', [HomePageController::class, 'show'])->name('posts.show');
@@ -19,9 +20,18 @@ Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
 Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
+Route::get('/posts/save',[HomePageController::class, 'saved'])->name('posts.saved');
+
+Route::post('/posts/save', [PostController::class, 'savePost'])->name('posts.savePost');
+
+Route::post('/posts/unsave', [PostController::class, 'unsavePost'])->name('posts.removeSavedPost');
+
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
