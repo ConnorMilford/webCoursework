@@ -111,6 +111,13 @@ class PostController extends Controller
             'message' => 'Post unsaved successfully!',
         ]);
     }
+
+    public function saved()
+    {
+        $savedPosts = auth()->user()->savedPosts; 
+
+        return view('posts.saved', compact('savedPosts'));
+    }
     
 
 }

@@ -62,7 +62,7 @@
                 
                 <!-- Pagination links -->
                 <div class="mt-4 text-center">
-                    {{$user ->posts->links()}}
+                    {{$posts->links()}}
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@ $(document).ready(function() {
         success: function (response) {
             if (response.success) {
                 alert('Post added successfully!');
-                location.reload(); 
+                location.reload();
             } else {
                 alert('Failed to add the post.');
             }

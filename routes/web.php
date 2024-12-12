@@ -6,7 +6,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\NotificationController;
 
 
 Route::get('/posts', [HomePageController::class, 'index'])->name('posts.index');
@@ -30,11 +30,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/posts/saved', [PostController::class, 'saved'])->name('posts.saved');
+
+
 Route::middleware('auth')->group(function () {
-    Route::get('/posts/saved', [HomePageController::class, 'saved'])->name('posts.saved');
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('/notifications/{notificationId}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markRead');
 });
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');

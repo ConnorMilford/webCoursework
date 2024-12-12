@@ -169,7 +169,7 @@
     $(document).on('click', '.submit-post', function () {
 
         const postText = $(this).closest('form').find('textarea[name="text"]').val();
-        const token = $('meta[name="csrf-token"]').attr('content'); // CSRF token
+        const token = $('meta[name="csrf-token"]').attr('content');
 
         if (!postText || postText.trim() === '') {
             alert('Please enter a post.');
