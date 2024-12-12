@@ -34,23 +34,6 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
-        // Handle profile picture upload
-        if ($request->hasFile('profile_picture')) {
-            $file = $request->file('profile_picture')->store('profile_pciture', 'public');
-
-            // Validate the uploaded file
-            $request->validate([
-                'profile_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
-
-            // Delete the old profile picture if it exists
-            if ($request->user()->profile_picture) {
-                Storage::disk('public')->delete($request->user()->profile_picture);
-            }
-
-            // Store the new profile picture
-            $request->user()->profile_picture = $request->file;
-        }
 
         $request->user()->save();
 

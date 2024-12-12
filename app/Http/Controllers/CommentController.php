@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Events\CommentCreated;
 use App\Models\Comment;
 use App\Models\Post;
 
@@ -22,6 +23,7 @@ class CommentController extends Controller
         $comment->postId = $post->id;
         $comment->save();
 
+        event(new CommentCreated($comment));
         return response()->json(['success' => true, 'comment' => $comment]);
     }
 

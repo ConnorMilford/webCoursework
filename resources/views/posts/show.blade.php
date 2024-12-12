@@ -41,8 +41,6 @@
                             @endif
                     </div>
 
-                    
-
                     <!-- Comments -->
                     <div class="mt-4">
                         <h4 class="text-lg font-semibold">Comments:</h4>
@@ -67,14 +65,14 @@
 
                          <!-- ADD COMMENT BUTTON -->
                                 
-                         <button class="show-comment-form bg-blue-500 text-white px-4 py-2 rounded mt-6">Add Comment</button>
+                         <button class="show-comment-form bg-transparent text-white px-4 py-2 rounded mt-6">Add Comment</button>
 
                         <!-- Hidden Comment Form -->
                         <div class="comment-form-container hidden mt-4 text-black">
                             <form id="comment-form">
                                 @csrf
                                 <textarea name="comment" placeholder="Write a comment..." class="w-full border rounded p-3"></textarea>
-                                <button type="button" class="submit-comment bg-green-500 text-white px-4 py-2 rounded mt-2">Submit</button>
+                                <button type="button" class="submit-comment bg-transparent text-white px-4 py-2 rounded mt-2">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -88,13 +86,13 @@
 <script>
     $(document).on('click', '.show-comment-form', function() {
         let commentFormContainer = $(this).next('.comment-form-container');
-        commentFormContainer.toggleClass('hidden'); // Tailwind's hidden class toggles visibility
+        commentFormContainer.toggleClass('hidden'); 
     });
 
     $(document).on('click', '.submit-comment', function() {
-        let postId = {{ $post->id }}; // Post ID
-        let commentText = $(this).closest('form').find('textarea[name="comment"]').val(); // Get the comment text
-        let token = '{{ csrf_token() }}'; // CSRF Token
+        let postId = {{ $post->id }}; 
+        let commentText = $(this).closest('form').find('textarea[name="comment"]').val(); 
+        let token = '{{ csrf_token() }}'; 
 
         if (commentText.trim() === '') {
             alert('Please enter a comment.');
@@ -112,7 +110,7 @@
             success: function(response) {
                 if (response.success) {
                     alert('Comment added successfully!');
-                    location.reload(); // Reload the page to show the new comment
+                    location.reload(); 
                 } else {
                     alert('Failed to add the comment.');
                 }
