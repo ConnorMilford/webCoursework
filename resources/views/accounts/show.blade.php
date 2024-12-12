@@ -43,23 +43,22 @@
                             </form>
                         </div>
                     </div>
-
-                    <!-- ADD post BUTTON -->
-                               
-                    <button class="show-post-form bg-transparent text-white px-4 py-2 rounded mt-6">Add Post</button>
-
-                    <!-- post form -->
-                    <div class="hidden post-form-container mt-4 text-black" data-id="{{$post->postText}}">
-                        <form action="{{ route('posts.store') }}" class=" shadow-md rounded-lg" data-id="{{$post->postText}}">
-                            @csrf
-                            @method('POST')
-                            <textarea name="text" placeholder="Write a post..." class="w-full border rounded" data-id="{{$post->postText}}"></textarea>
-                            <button type="button" class="submit-post bg-transparent  text-white px-4 py-2 rounded mt-2">Submit</button>
-                        </form>
-                    </div>
                 @empty
                     <p>No posts available.</p>
                 @endforelse
+
+                <!-- ADD post BUTTON -->    
+                <button class="show-post-form bg-transparent text-white px-4 py-2 rounded mt-6">Add Post</button>
+
+                <!-- post form -->
+                <div class="post-form-container hidden mt-4 text-black" data-id="{{$post->postText}}">
+                    <form action="{{ route('posts.store') }}" class=" shadow-md rounded-lg" data-id="{{$post->postText}}">
+                        @csrf
+                        @method('POST')
+                        <textarea name="text" placeholder="Write a post..." class="w-full border rounded" data-id="{{$post->postText}}"></textarea>
+                        <button type="button" class="submit-post bg-transparent  text-white px-4 py-2 rounded mt-2">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -68,6 +67,45 @@
 
 @push('scripts')
 <script>
+$(document).ready(function() {
+    //ADD POST BUTTON
+    $(document).on('click', '.show-post-form', function() {
+        $('.post-form-container').toggleClass('hidden');
+        console.log('button clicked');
+    });
+
+    $(document).on('click', '.submit-post', function () {
+
+    const postText = $(this).closest('form').find('textarea[name="text"]').val();
+    const token = $('meta[name="csrf-token"]').attr('content'); // CSRF token
+
+    if (!postText || postText.trim() === '') {
+        alert('Please enter a post.');
+        return;
+    }
+
+    $.ajax({
+        url: '/posts/',  
+        type: 'POST',
+        data: {
+            _token: token, 
+            postText: postText 
+        },
+        success: function (response) {
+            if (response.success) {
+                alert('Post added successfully!');
+                location.reload(); 
+            } else {
+                alert('Failed to add the post.');
+            }
+        },
+        error: function (xhr) {
+            alert('An error occurred while adding the post.');
+            console.error(xhr.responseText); 
+            }
+        });
+    });
+
     $(document).on('click', '.edit-post-button', function () {
         const postId = $(this).data('id');
         const postDiv = $(`.edit-form-container[data-id="${postId}"]`).closest('.my-4');
@@ -115,44 +153,9 @@
                 console.error(xhr.responseText);
             }
         });
-
-        $(document).on('click', '.show-post-form', function() {
-            $('.post-form-container').toggleClass('hidden');
-        });
-
-    
     
     // ADD POST (Submit the new post via AJAX)
-    $(document).on('click', '.submit-post', function () {
-
-        const postText = $(this).closest('form').find('textarea[name="text"]').val();
-        const token = $('meta[name="csrf-token"]').attr('content'); // CSRF token
-
-        if (!postText || postText.trim() === '') {
-            alert('Please enter a post.');
-            return;
-        }
-
-        $.ajax({
-            url: '/posts/',  
-            type: 'POST',
-            data: {
-                _token: token, 
-                postText: postText 
-            },
-            success: function (response) {
-                if (response.success) {
-                    alert('Post added successfully!');
-                    location.reload(); 
-                } else {
-                    alert('Failed to add the post.');
-                }
-            },
-            error: function (xhr) {
-                alert('An error occurred while adding the post.');
-                console.error(xhr.responseText); 
-            }
-        });
+    
     });
 });
 </script>
