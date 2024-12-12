@@ -14,6 +14,18 @@ class UserAccountController extends Controller
         return view('userAccounts.index', compact('userAccounts'));
     }
 
+    public function show($id) 
+    {
+        $user = UserAccount::find($id);
+
+        if (!$user) {
+            // If user account doesn't exist, return a 404 response
+            abort(404, 'User Account not found');
+        }
+
+        return view('accounts.show', compact('user'));
+    }
+
 
 
     
