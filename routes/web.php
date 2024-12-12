@@ -20,8 +20,6 @@ Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
 Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
-Route::get('/posts/save',[HomePageController::class, 'saved'])->name('posts.saved');
-
 Route::post('/posts/save', [PostController::class, 'savePost'])->name('posts.savePost');
 
 Route::post('/posts/unsave', [PostController::class, 'unsavePost'])->name('posts.removeSavedPost');
@@ -29,6 +27,10 @@ Route::post('/posts/unsave', [PostController::class, 'unsavePost'])->name('posts
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/posts/saved', [HomePageController::class, 'saved'])->name('posts.saved');
 });
 
 

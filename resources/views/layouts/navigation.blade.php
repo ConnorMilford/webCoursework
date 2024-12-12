@@ -22,6 +22,12 @@
                             {{ __('Saved Posts') }}
                         </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-6 sm:-my-px sm:ms-4 sm:flex">
+                    <x-nav-link :href="route('posts.saved')" :active="request()->routeIs('posts.saved')">
+                            {{ __('Notifications') }}
+                        </x-nav-link>
+                </div>
             </div>
 
             
@@ -30,18 +36,13 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="80">
-                    
-                    
-
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                          <!--PFP section-->
                             <div class="flex items-center ml-auto pl-auto">
-                                <img
-                                        src="{{Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('storage/images/default-profile.png') }}"   
+                                <img src="{{Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('storage/images/default-profile.png') }}"   
                                         alt="Profile Picture"
-                                        class="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-600 mr-8 "
-                                    >
+                                        class="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-600 mr-8 ">
                             </div>   
                         
                         

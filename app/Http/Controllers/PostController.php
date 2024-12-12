@@ -10,20 +10,16 @@ class PostController extends Controller
 {
     public function store (Request $request) 
     {
-        $request->validate([
+        $validated = $request->validate([
             'postText' => 'required|string|max:250',
         ]);
 
-        $post = Post::create([
-            'postText' => $request->postText,
+       $post = Post::create([
+            'postText' => $validated['postText'],
             'user_account_id' => auth()->id(),
         ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Post Creation Success',
-            'post' => $post,
-        ]);
+        return response()->json(['success' => true, 'post' => $post]);
     }
 
     public function update (Request $request, Post $post) 

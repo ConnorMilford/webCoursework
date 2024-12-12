@@ -20,6 +20,8 @@ class HomePageController extends Controller
 
     public function saved()
     {
-        return view('posts.saved', compact('posts'));
+        $savedPosts = auth()->user()->saved_posts ?? [];
+
+        return view('posts.saved', compact('savedPosts'));
     }
 }
