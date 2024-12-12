@@ -24,6 +24,7 @@ Route::post('/posts/save', [PostController::class, 'savePost'])->name('posts.sav
 
 Route::post('/posts/unsave', [PostController::class, 'unsavePost'])->name('posts.removeSavedPost');
 
+Route::get('/accounts/{id}', [UserAccountController::class, 'show'])->name('accounts.show');
 
 Route::get('/', function () {
     return view('welcome');

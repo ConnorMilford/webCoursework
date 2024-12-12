@@ -13,12 +13,12 @@
                         <div class="my-2 p-2 border-b">
 
                             <div class="flex">
-                                <p><strong>{{ $post->user->userName }}</strong> (Posted on: {{ $post->created_at->format('F j, Y') }})</p>
+                                <p><strong><a href="{{route('accounts.show', $post->user->id)}}">{{$post->user->userName}}</a></strong> (Posted on: {{ $post->created_at->format('F j, Y') }})</p>
                                 <button class="favourite-post-button bg-transparent text-white px-2 py-1 rounded text-xs" data-id="{{ $post->id }}">
                                         {{ in_array($post->id, auth()->user()->saved_posts ?? []) ? 'Unsave' : 'Save' }}
                                     </button>
                             </div>
-                            <!-- TODO: ADD USER PAGE -->
+
                             <a href="{{ route('posts.show', $post->id) }}">{{$post->postText}}</a>
                             
                             
@@ -113,10 +113,7 @@
             }
         });
     });
-
-
-
-
+    
     // EDIT POST BUTTON
     $(document).on('click', '.edit-post-button', function () {
         $('.edit-form-container').toggleClass('hidden');
