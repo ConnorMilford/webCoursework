@@ -16,7 +16,8 @@ class UserAccount extends Authenticatable
         'userName',
         'password',
         'email',
-
+        'profile_picture',
+        'saved_posts',
     ];
 
     protected $hidden = [
@@ -26,12 +27,13 @@ class UserAccount extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'saved_posts' => 'array',
     ];
 
 
     public function posts() 
     {
-        return $this->hasMany(Post::class, 'user_account_id');
+        return $this->hasMany(Post::class, 'user_account_id', 'id');
     }
 
     public function comments()

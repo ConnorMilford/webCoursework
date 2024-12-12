@@ -11,12 +11,13 @@ class Post extends Model
 
     protected $fillable = [
         'postText', 
-        'user_account_id'
+        'user_account_id',
+        'photo',
     ];
     
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_account_id');
+        return $this->belongsTo(UserAccount::class, 'user_account_id');
     }
 
     public function comments()

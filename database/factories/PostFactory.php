@@ -24,6 +24,7 @@ class PostFactory extends Factory
         return [
             'postText' => $this->faker->sentence(),
             'user_account_id' => UserAccount::pluck('id')->random(),
+            'photo' => $this->faker->imageUrl(600, 400, 'technology', true, 'photo'),
         ];
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('postText');
             $table->unsignedBigInteger('user_account_id');
             $table->timestamps();
-
+            $table->string('photo')->nullable();
             $table->foreign('user_account_id')->references('id')->on('user_accounts')
              ->onDelete('cascade')->onUpdate('cascade');
         });
